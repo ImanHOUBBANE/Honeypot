@@ -1,0 +1,12 @@
+RDP_FAILED_CL 
+| project RawData 
+| extend  
+    latitude = extract("latitude:([\\d.]+),", 1, RawData), 
+    longitude = extract("longitude:([\\d.]+),", 1, RawData), 
+    destinationhost = extract("destinationhost:([^,]+),", 1, RawData), 
+    username = extract("username:([^,]+),", 1, RawData), 
+    sourcehost = extract("sourcehost:([^,]+),", 1, RawData), 
+    state = extract("state:([^,]+),", 1, RawData), 
+    country = extract("country:([^,]+),", 1, RawData), 
+    label = extract("label:([^,]+)$", 1, RawData) 
+|summarize Attempts = count() by  username
